@@ -2,7 +2,6 @@
 data/bars/
 data/raw/
 data/*.log
-reports/
 __pycache__/
 *.pyc
 .hypothesis/
