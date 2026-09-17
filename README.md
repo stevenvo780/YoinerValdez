@@ -4,6 +4,12 @@ Este repositorio contiene todo lo hecho sobre el robot de trading **OHLCMTF SCAL
 la auditoría del código, una versión corregida y modular del robot (v15), y un laboratorio en Python que reproduce la estrategia
 sobre 3,7 años de precios reales para medir si funciona y cuánto riesgo tiene.
 
+## Si solo quieres el bot (para el cliente)
+
+Todo está en **`ENTREGA_CLIENTE/`**: el robot en **un solo archivo** `OHLCMTF_Scalper_v15.mq5` (igual que el `expert 3.3.mq5`
+original, se copia a *MQL5/Experts* y se compila con F7), el mismo ya compilado `.ex5`, y un `LEEME.md` en lenguaje llano con qué
+cambió, cuánto capital hace falta y qué parámetros ajustar. No requiere instalar carpetas de módulos.
+
 ## Para empezar en 3 minutos (sin saber programar)
 
 1. **Leer el veredicto**: `docs/VALIDACION_RESULTADOS.md` (resultados) y `docs/AUDITORIA_v14.md` (qué estaba mal en el robot y qué se cambió).
@@ -24,9 +30,10 @@ sobre 3,7 años de precios reales para medir si funciona y cuánto riesgo tiene.
 
 | Carpeta | Contenido |
 |---|---|
+| `ENTREGA_CLIENTE/` | Lo que se entrega al cliente: bot en un solo `.mq5`, `.ex5` compilado, script de calendario y `LEEME.md`. |
 | `old/` | El robot original tal cual se recibió (`expert 3.3.mq5`) y la versión intermedia monolítica v14.1. No tocar. |
 | `docs/` | `AUDITORIA_v14.md`: hallazgos (críticos/importantes/menores), cambios, plan de validación, checklist para cuenta real. `VALIDACION_RESULTADOS.md`: resultados de las simulaciones y recomendaciones. |
-| `mql5/` | Robot v15 modular: `Experts/OHLCMTF/OHLCMTF_Scalper.mq5` (principal), `Include/OHLCMTF/*.mqh` (14 módulos), `Scripts/OHLCMTF/ExportCalendarCSV.mq5` (exporta el calendario económico para el filtro de noticias), `compilados/` (binarios), `compilar_ea.bat` / `.sh`. |
+| `mql5/` | Robot v15 en forma modular (para desarrollo): `Experts/OHLCMTF/OHLCMTF_Scalper.mq5` (principal), `Include/OHLCMTF/*.mqh` (14 módulos), `Scripts/OHLCMTF/ExportCalendarCSV.mq5`, `compilados/` (binarios), `compilar_ea.bat` / `.sh`, y `build_single_file.py` que genera el archivo único de `ENTREGA_CLIENTE/` a partir de los módulos. |
 | `ohlc_quant/` | Laboratorio Python: descarga de precios (Dukascopy), motor que reproduce el robot, Monte Carlo, walk-forward, sensibilidad, estrés, lector de reportes MT5. Ver su `README.md` para el detalle de comandos. |
 | `ejecutar.sh` / `ejecutar.bat` | Menú único para usar todo lo anterior. |
 | `TOKENS_SESION.md` | Consumo de tokens de la sesión de trabajo que produjo este repositorio. |

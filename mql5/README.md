@@ -22,6 +22,12 @@ Include/OHLCMTF/Panel.mqh                 CPanel: panel visual y flechas
 Scripts/OHLCMTF/ExportCalendarCSV.mq5     exporta el calendario económico a Common\Files\news_events.csv
 ```
 
+## Archivo único para el cliente
+
+`python3 build_single_file.py` fusiona el principal y los 14 módulos en `OHLCMTF_Scalper_v15_single.mq5` (1.908 líneas, compila
+con 0 errores). Es la versión que se entrega en `../ENTREGA_CLIENTE/`; los módulos son la fuente de verdad y el archivo único
+se regenera tras cada cambio.
+
 ## Instalación
 
 Copiar `Experts/OHLCMTF`, `Include/OHLCMTF` y `Scripts/OHLCMTF` dentro de `<Terminal>/MQL5/` respetando las carpetas, y compilar
