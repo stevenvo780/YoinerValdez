@@ -1,0 +1,10 @@
+.venv/
+data/bars/
+data/raw/
+data/*.log
+reports/
+__pycache__/
+*.pyc
+.hypothesis/
+.pytest_cache/
+*.egg-info/

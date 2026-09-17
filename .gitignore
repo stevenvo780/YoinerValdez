@@ -1,0 +1,26 @@
+# Python
+ohlc_quant/.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.hypothesis/
+.pytest_cache/
+.ruff_cache/
+
+# Datos de mercado (69 MB, se regeneran con ./ejecutar.sh datos)
+ohlc_quant/data/bars/
+ohlc_quant/data/raw/
+ohlc_quant/data/*.log
+
+# Salidas voluminosas de simulación (se regeneran); se conservan los informes .md
+ohlc_quant/reports/**/*.csv
+ohlc_quant/reports/**/*.log
+ohlc_quant/reports/**/*.json
+
+# Entorno Wine / MetaTrader local
+mt5wine/
+mt5dl/
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,28 @@
+[project]
+name = "ohlc_quant"
+version = "0.1.0"
+description = "Validación cuantitativa del EA OHLCMTF SCALPER v14 (XAUUSD): port de la estrategia, backtest sobre ticks Dukascopy, Monte Carlo, walk-forward, sensibilidad y estrés"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2", "pandas>=2.2", "pyarrow", "numba>=0.60", "scipy", "requests", "openpyxl", "lxml"]
+
+[project.optional-dependencies]
+dev = ["pytest", "hypothesis", "pytest-xdist", "pytest-cov", "pytest-timeout", "ruff"]
+
+[project.scripts]
+ohlc-quant = "ohlc_quant.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+timeout = 600
+addopts = "-q"
+
+[tool.ruff]
+line-length = 150
+target-version = "py311"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["ohlc_quant*"]
