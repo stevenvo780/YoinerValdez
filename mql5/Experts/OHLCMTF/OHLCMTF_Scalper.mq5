@@ -1,13 +1,13 @@
 //+------------------------------------------------------------------+
 //|                                            OHLCMTF_Scalper.mq5   |
-//|   XAU/USD Pure Price Action Structure Scalper v15 (modular)      |
-//|   Lógica: v14.0 ELITE + correcciones de auditoría v14.1          |
+//|   XAU/USD Pure Price Action Structure Scalper v16 (modular)      |
+//|   Lógica: v15 + defaults medidos sobre el M1 Dukascopy completo  |
 //|   Módulos en Include/OHLCMTF/*.mqh                                |
 //+------------------------------------------------------------------+
 #property strict
-#property copyright "OHLCMTF SCALPER v15 - Pure Price Action XAUUSD"
-#property version   "15.00"
-#property description "Structure breakout scalper XAUUSD, arquitectura modular con guardia de equity dura"
+#property copyright "OHLCMTF SCALPER v16 - Pure Price Action XAUUSD"
+#property version   "16.00"
+#property description "Structure breakout scalper XAUUSD v16, guardia de equity dura, sin protección progresiva"
 
 #include <OHLCMTF/Context.mqh>
 #include <OHLCMTF/Panel.mqh>

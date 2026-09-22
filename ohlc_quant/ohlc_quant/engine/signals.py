@@ -172,6 +172,8 @@ def compute_signals(md: MarketData, p: EAParams, t1: str, t2: str, t3: str, set_
     band = p.atr_max_pct - p.atr_min_pct
     sweet = (band > 0) & (atr_pct >= p.atr_min_pct + band * 0.2) & (atr_pct <= p.atr_min_pct + band * 0.8)
     min_str = min(p.min_signal_strength, MAX_STRENGTH)
+    if set_id == SET_CUSTOM and p.custom_min_signal_strength > 0:
+        min_str = min(p.custom_min_signal_strength, MAX_STRENGTH)
 
     def score(direction, margin, mtf):
         s = np.ones(len(i), np.int8)

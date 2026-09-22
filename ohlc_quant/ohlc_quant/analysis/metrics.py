@@ -112,6 +112,24 @@ def metrics_table(rows: dict[str, Metrics]) -> pd.DataFrame:
     return df[cols]
 
 
+def year_profit_factors(trades: pd.DataFrame) -> list[tuple[int, float, int]]:
+    """Factor de beneficio por año de cierre, sobre la misma lista de operaciones."""
+    if trades is None or len(trades) == 0 or "close_time" not in trades or "pnl" not in trades:
+        return []
+    rows = []
+    years = trades["close_time"].dt.year
+    for year, idx in trades.groupby(years).groups.items():
+        pnl = trades.loc[idx, "pnl"].to_numpy(dtype=float)
+        wins = pnl[pnl > 0].sum()
+        losses = -pnl[pnl <= 0].sum()
+        if losses > 0:
+            pf = float(wins / losses)
+        else:
+            pf = math.inf if wins > 0 else 0.0
+        rows.append((int(year), pf, int(len(pnl))))
+    return rows
+
+
 def by_period(trades: pd.DataFrame, freq: str = "ME") -> pd.DataFrame:
     if len(trades) == 0:
         return pd.DataFrame(columns=["n", "net"])

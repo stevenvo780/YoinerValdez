@@ -1,14 +1,18 @@
 # OHLCMTF SCALPER — auditoría, EA corregido y validación sobre datos reales
 
 Este repositorio contiene todo lo hecho sobre el robot de trading **OHLCMTF SCALPER v14.0 ELITE** (MetaTrader 5, oro XAUUSD):
-la auditoría del código, una versión corregida y modular del robot (v15), y un laboratorio en Python que reproduce la estrategia
+la auditoría del código, el robot corregido (v15) y la versión de rendimiento (v16), y un laboratorio en Python que reproduce la estrategia
 sobre 3,7 años de precios reales para medir si funciona y cuánto riesgo tiene.
 
 ## Si solo quieres el bot (para el cliente)
 
-Todo está en **`ENTREGA_CLIENTE/`**: el robot en **un solo archivo** `OHLCMTF_Scalper_v15.mq5` (igual que el `expert 3.3.mq5`
-original, se copia a *MQL5/Experts* y se compila con F7), el mismo ya compilado `.ex5`, y un `LEEME.md` en lenguaje llano con qué
-cambió, cuánto capital hace falta y qué parámetros ajustar. No requiere instalar carpetas de módulos.
+Todo está en **`ENTREGA_CLIENTE/`**. El instructivo es `LEEME.md`.
+
+- **`OHLCMTF_Scalper_v16.mq5`**: el robot que hay que instalar. Un solo archivo, se copia a *MQL5/Experts* y se compila con F7. No trae `.ex5`: se compila en el MetaEditor del cliente.
+- **`OHLCMTF_Scalper_v15.mq5`** y **`.ex5`**: la entrega anterior, por si hay que repetir esa prueba. No poner v15 y v16 a la vez sobre el mismo oro: comparten número mágico.
+- `ExportCalendarCSV.mq5` / `.ex5`: solo para volcar el calendario económico si se activa el filtro de noticias en el probador.
+
+La v16 deja cuatro defaults distintos de la v15 (lookback 10, objetivo 3,0 ATR, sin exigir expansión, protección progresiva apagada). El techo de riesgo del 2,5 % y la guardia de drawdown del 12 % no cambian. Capital de trabajo: 3.000-5.000. Con 300 casi no opera.
 
 ## Para empezar en 3 minutos (sin saber programar)
 
@@ -30,10 +34,10 @@ cambió, cuánto capital hace falta y qué parámetros ajustar. No requiere inst
 
 | Carpeta | Contenido |
 |---|---|
-| `ENTREGA_CLIENTE/` | Lo que se entrega al cliente: bot en un solo `.mq5`, `.ex5` compilado, script de calendario y `LEEME.md`. |
+| `ENTREGA_CLIENTE/` | Lo que se entrega al cliente: `OHLCMTF_Scalper_v16.mq5`, el v15 (fuente y `.ex5`), script de calendario y `LEEME.md`. |
 | `old/` | El robot original tal cual se recibió (`expert 3.3.mq5`) y la versión intermedia monolítica v14.1. No tocar. |
 | `docs/` | `AUDITORIA_v14.md`: hallazgos (críticos/importantes/menores), cambios, plan de validación, checklist para cuenta real. `VALIDACION_RESULTADOS.md`: resultados de las simulaciones y recomendaciones. |
-| `mql5/` | Robot v15 en forma modular (para desarrollo): `Experts/OHLCMTF/OHLCMTF_Scalper.mq5` (principal), `Include/OHLCMTF/*.mqh` (14 módulos), `Scripts/OHLCMTF/ExportCalendarCSV.mq5`, `compilados/` (binarios), `compilar_ea.bat` / `.sh`, y `build_single_file.py` que genera el archivo único de `ENTREGA_CLIENTE/` a partir de los módulos. |
+| `mql5/` | Robot en módulos (fuente de la v16): `Experts/OHLCMTF/OHLCMTF_Scalper.mq5`, `Include/OHLCMTF/*.mqh`, `Scripts/OHLCMTF/ExportCalendarCSV.mq5`, `compilados/` (binarios de la v15), `compilar_ea.bat` / `.sh`, y `build_single_file.py`, que regenera `OHLCMTF_Scalper_v16.mq5` en `ENTREGA_CLIENTE/`. |
 | `ohlc_quant/` | Laboratorio Python: descarga de precios (Dukascopy), motor que reproduce el robot, Monte Carlo, walk-forward, sensibilidad, estrés, lector de reportes MT5. Ver su `README.md` para el detalle de comandos. |
 | `ejecutar.sh` / `ejecutar.bat` | Menú único para usar todo lo anterior. |
 | `TOKENS_SESION.md` | Consumo de tokens de la sesión de trabajo que produjo este repositorio. |
@@ -46,6 +50,7 @@ cambió, cuánto capital hace falta y qué parámetros ajustar. No requiere inst
   mercado alcista de oro de 2025-2026; 2023 y 2024 fueron planos. Sin las 18 mejores operaciones el sistema apenas gana.
 - Walk-forward fuera de muestra: PF 1.37. Hay ventaja, pero es modesta y depende del régimen. Recomendación: demo con capital real
   previsto y expectativas bajas antes de considerar cuenta real (detalle en `docs/VALIDACION_RESULTADOS.md`).
+- La v16, con depósito 5.000 y el mismo histórico, hizo en el laboratorio 2.697 de beneficio neto contra 1.860 de la v15 (factor 1,49 contra 1,43; drawdown 5,4 % contra 5,8 %). No es un resultado del Strategy Tester del bróker del cliente. Cómo instalarla está en `ENTREGA_CLIENTE/LEEME.md`.
 
 ## Requisitos
 

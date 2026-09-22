@@ -39,11 +39,16 @@ Nueva York, el estándar de los brókers de oro). `--dst eu|none` para otros br�
 | `stress` | Spread ×1.5/×2/+20 pts, slippage, comisión, latencia, stops level, sin PP, sin filtros, relojes alternativos, tipos de bróker. |
 | `synthetic-mc` | La estrategia sobre N caminos sintéticos calibrados (regímenes de volatilidad, saltos, gaps de fin de semana). |
 
-Opciones comunes: `--preset v141|v140|lean`, `--set param=valor` (cualquier input del EA), `--broker campo=valor`,
+Opciones comunes: `--preset v16|v15|v141|v140|lean`, `--set param=valor` (cualquier campo de `EAParams`), `--broker campo=valor`,
 `--deposit`, `--start/--end`, `--synthetic DIAS` (datos sintéticos en vez de reales), `--workers`.
+
+`v15` y `v141` son los defaults congelados del robot v15. `v16` es el robot entregado en `ENTREGA_CLIENTE/OHLCMTF_Scalper_v16.mq5`.
+No uses `v141` para medir la v16: después del cambio, `v141` sigue siendo la v15.
 
 ```bash
 .venv/bin/python -m ohlc_quant compare --deposit 300
+.venv/bin/python -m ohlc_quant backtest --preset v15 --deposit 5000
+.venv/bin/python -m ohlc_quant backtest --preset v16 --deposit 5000
 .venv/bin/python -m ohlc_quant backtest --preset v141 --deposit 3000 --set use_custom_pair=false
 .venv/bin/python -m ohlc_quant wfa --preset lean --deposit 3000 --grid '{"structure_lookback":[8,12,16],"atr_sl_mult":[1.5,1.8,2.2]}'
 .venv/bin/python -m ohlc_quant stress --preset lean --deposit 3000

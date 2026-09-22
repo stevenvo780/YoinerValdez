@@ -1,11 +1,11 @@
 #ifndef OHLCMTF_TYPES_MQH
 #define OHLCMTF_TYPES_MQH
 
-#define OHLC_VERSION   "15.00"
+#define OHLC_VERSION   "16.00"
 #define MAGIC_FIXED    20260914
 #define MAGIC_CUSTOM   20260915
-#define GV_PREFIX      "OHLC15_"
-#define PANEL_PREFIX   "OHLCMTF_v15_"
+#define GV_PREFIX      "OHLC16_"
+#define PANEL_PREFIX   "OHLCMTF_v16_"
 
 enum ENUM_SIGNAL_SET { SET_FIXED = 0, SET_CUSTOM = 1 };
 

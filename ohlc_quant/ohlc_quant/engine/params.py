@@ -39,6 +39,7 @@ class EAParams:
     max_risk_pct: float = 1.25
     hard_risk_cap_pct: float = 2.50
     min_signal_strength: int = 4
+    custom_min_signal_strength: int = 0
 
     min_sl_points: int = 180
     slippage_points: int = 40
@@ -104,14 +105,107 @@ class EAParams:
         return asdict(self)
 
     @classmethod
+    def v15(cls) -> "EAParams":
+        """Defaults entregados como OHLCMTF Scalper v15. No siguen a EAParams()."""
+        return cls(
+            structure_lookback=12,
+            min_breakout_atr_mult=0.28,
+            max_breakout_atr_mult=2.20,
+            min_body_ratio=0.55,
+            max_against_wick_ratio=0.35,
+            require_close_beyond=True,
+            prefer_expansion_break=True,
+            trend_lookback=28,
+            trend_timeframe="H4",
+            min_swing_confirmations=2,
+            require_trend_alignment=True,
+            block_when_no_trend=True,
+            enable_buy=True,
+            enable_sell=True,
+            require_higher_tf_confirm=True,
+            use_fixed_set=True,
+            use_custom_pair=True,
+            tf_fast="M5",
+            tf_slow="H4",
+            atr_period=14,
+            atr_timeframe="H1",
+            atr_sl_mult=1.80,
+            atr_tp_mult=3.20,
+            min_risk_pct=0.25,
+            max_risk_pct=1.25,
+            hard_risk_cap_pct=2.50,
+            min_signal_strength=4,
+            custom_min_signal_strength=0,
+            min_sl_points=180,
+            slippage_points=40,
+            spread_sample_size=25,
+            max_spread_points=0.0,
+            spread_buffer_mult=1.60,
+            high_spread_threshold=28.0,
+            high_spread_atr_min_mult=1.80,
+            high_spread_risk_reduction=0.45,
+            high_spread_sl_extra_mult=1.35,
+            cooldown_seconds=180,
+            max_trades_per_day=6,
+            use_volatility_filter=True,
+            atr_min_pct=0.025,
+            atr_max_pct=1.80,
+            use_session_filter=True,
+            session_start_hour=7,
+            session_end_hour=20,
+            allow_asia_breakouts=False,
+            use_progressive_protection=True,
+            pp_stage1_r=0.60,
+            pp_stage1_sl_r=0.45,
+            pp_stage2_r=1.00,
+            pp_be_buffer_points=25.0,
+            pp_stage3_r=1.60,
+            pp_lock_fraction=0.55,
+            pp_trail_start_r=2.20,
+            pp_trail_atr_mult=1.15,
+            pp_trail_structure_lookback=8,
+            pp_min_step_points=20.0,
+            use_daily_loss_limit=True,
+            max_daily_loss_pct=4.50,
+            use_loss_streak_guard=True,
+            max_consecutive_losses=3,
+            loss_streak_pause_minutes=90,
+            use_total_drawdown_limit=True,
+            max_total_drawdown_pct=12.0,
+            sizing_mode="v141",
+            allow_minlot_above_cap=False,
+            size_on_equity=True,
+            dd_use_equity_peak=True,
+            dd_flatten_positions=True,
+            dd_pause_hours=72,
+            daily_loss_flatten=False,
+            close_before_weekend=False,
+            weekend_close_hour=21,
+            friday_entry_cutoff_hour=24,
+            streak_reset_min_r=0.25,
+            use_avg_spread_for_mode=True,
+            atr_closed_bar=True,
+        )
+
+    @classmethod
     def v140(cls) -> "EAParams":
-        return cls(sizing_mode="v140", allow_minlot_above_cap=True, size_on_equity=False,
-                   dd_use_equity_peak=False, dd_flatten_positions=False, streak_reset_min_r=0.0,
-                   use_avg_spread_for_mode=False, atr_closed_bar=False)
+        return cls.v15().with_(sizing_mode="v140", allow_minlot_above_cap=True, size_on_equity=False,
+                               dd_use_equity_peak=False, dd_flatten_positions=False, streak_reset_min_r=0.0,
+                               use_avg_spread_for_mode=False, atr_closed_bar=False)
 
     @classmethod
     def lean(cls) -> "EAParams":
-        return cls(min_risk_pct=0.75, max_risk_pct=0.75, use_volatility_filter=False, use_custom_pair=False)
+        return cls.v15().with_(min_risk_pct=0.75, max_risk_pct=0.75, use_volatility_filter=False, use_custom_pair=False)
+
+    @classmethod
+    def v16(cls) -> "EAParams":
+        """Defaults entregados como OHLCMTF Scalper v16."""
+        return cls.v15().with_(
+            prefer_expansion_break=False,
+            use_progressive_protection=False,
+            structure_lookback=10,
+            atr_tp_mult=3.0,
+        )
 
 
 PARAM_NAMES = [f.name for f in fields(EAParams)]

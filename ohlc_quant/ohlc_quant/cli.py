@@ -7,7 +7,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from ohlc_quant.analysis.metrics import by_hour, by_period, by_weekday, compute_metrics, exclusion_analysis, metrics_table
+from ohlc_quant.analysis.metrics import (
+    by_hour, by_period, by_weekday, compute_metrics, exclusion_analysis, metrics_table, year_profit_factors,
+)
 from ohlc_quant.analysis.montecarlo import mc_suite, summary_stats_mc
 from ohlc_quant.analysis.report import deals_to_trades, load_deals
 from ohlc_quant.analysis.sensitivity import grid_2d, one_at_a_time, plateau_score
@@ -38,7 +40,13 @@ def _out(args, name: str, obj):
 
 
 def _params(args) -> EAParams:
-    p = {"v141": EAParams(), "v140": EAParams.v140(), "lean": EAParams.lean()}[args.preset]
+    p = {
+        "v141": EAParams.v15(),
+        "v15": EAParams.v15(),
+        "v140": EAParams.v140(),
+        "lean": EAParams.lean(),
+        "v16": EAParams.v16(),
+    }[args.preset]
     for kv in args.set or []:
         k, v = kv.split("=", 1)
         cur = getattr(p, k)
@@ -88,6 +96,9 @@ def cmd_backtest(args):
     r = run_backtest(md, p, b, args.deposit, start=args.start, end=args.end)
     m = compute_metrics(r.trades, args.deposit, r.equity.values)
     _print_metrics(f"backtest {args.preset} depósito ${args.deposit}", m)
+    for year, pf, n in year_profit_factors(r.trades):
+        pf_txt = "inf" if pf == float("inf") else f"{pf:.6f}"
+        print(f"year_profit_factor {year} {pf_txt} n={n}")
     print("\nestadísticas motor:", r.stats)
     if len(r.trades):
         print("\npor set:\n", r.trades.groupby("set")["pnl"].agg(["count", "sum", "mean"]))
@@ -105,7 +116,7 @@ def cmd_compare(args):
     md, _ = _market(args)
     b = _broker(args)
     rows = {}
-    for name, p in (("v140", EAParams.v140()), ("v141", EAParams()), ("lean", EAParams.lean())):
+    for name, p in (("v140", EAParams.v140()), ("v141", EAParams.v15()), ("lean", EAParams.lean())):
         r = run_backtest(md, p, b, args.deposit, start=args.start, end=args.end)
         rows[name] = compute_metrics(r.trades, args.deposit, r.equity.values)
         print(name, r.stats)
@@ -248,7 +259,7 @@ def main(argv=None):
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--symbol", default="XAUUSD"); common.add_argument("--bars", default=str(ROOT / "data" / "bars"))
     common.add_argument("--out", default=str(ROOT / "reports")); common.add_argument("--deposit", type=float, default=300.0)
-    common.add_argument("--preset", choices=["v141", "v140", "lean"], default="v141"); common.add_argument("--set", action="append", help="param=valor")
+    common.add_argument("--preset", choices=["v141", "v15", "v140", "lean", "v16"], default="v141"); common.add_argument("--set", action="append", help="param=valor")
     common.add_argument("--broker", action="append", help="campo=valor de BrokerSpec")
     common.add_argument("--utc-offset", type=int, default=2); common.add_argument("--dst", choices=["us", "eu", "none"], default="us")
     common.add_argument("--start"); common.add_argument("--end"); common.add_argument("--synthetic", type=int, default=0, help="días sintéticos en vez de datos reales")

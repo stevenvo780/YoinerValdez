@@ -24,9 +24,9 @@ Scripts/OHLCMTF/ExportCalendarCSV.mq5     exporta el calendario económico a Com
 
 ## Archivo único para el cliente
 
-`python3 build_single_file.py` fusiona el principal y los 14 módulos en `OHLCMTF_Scalper_v15_single.mq5` (1.908 líneas, compila
-con 0 errores). Es la versión que se entrega en `../ENTREGA_CLIENTE/`; los módulos son la fuente de verdad y el archivo único
-se regenera tras cada cambio.
+`python3 build_single_file.py` fusiona el principal y los 14 módulos en `OHLCMTF_Scalper_v16_single.mq5` y lo copia a
+`../ENTREGA_CLIENTE/OHLCMTF_Scalper_v16.mq5`. Los módulos son la fuente de verdad. El archivo único v15 que ya estaba en
+`ENTREGA_CLIENTE/` no se regenera.
 
 ## Instalación
 

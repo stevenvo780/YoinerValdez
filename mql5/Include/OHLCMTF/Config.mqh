@@ -3,13 +3,13 @@
 #include <OHLCMTF/Types.mqh>
 
 input group "=== 1. STRUCTURE BREAKOUT (ENTRY CORE) ==="
-input int    Structure_Lookback          = 12;
+input int    Structure_Lookback          = 10;
 input double Min_Breakout_ATR_Mult       = 0.28;
 input double Max_Breakout_ATR_Mult       = 2.20;
 input double Min_Body_Ratio              = 0.55;
 input double Max_Against_Wick_Ratio      = 0.35;
 input bool   Require_Close_Beyond        = true;
-input bool   Prefer_Expansion_Break      = true;
+input bool   Prefer_Expansion_Break      = false;
 
 input group "=== 2. STRUCTURE TREND FILTER ==="
 input int    Trend_Lookback              = 28;
@@ -35,7 +35,7 @@ input group "=== 5. ATR (VOLATILITY) ==="
 input int    ATR_Period                  = 14;
 input ENUM_TIMEFRAMES ATR_Timeframe      = PERIOD_H1;
 input double ATR_SL_Multiplier           = 1.80;
-input double ATR_TP_Multiplier           = 3.20;
+input double ATR_TP_Multiplier           = 3.0;
 
 input group "=== 6. DYNAMIC RISK BY QUALITY ==="
 input double Min_Risk_Percent            = 0.25;
@@ -76,7 +76,7 @@ input bool   Allow_Asia_Breakouts        = false;
 input int    Friday_Entry_Cutoff_Hour    = 24;      // 24 = sin corte
 
 input group "=== 12. PROGRESSIVE PROTECTION ==="
-input bool   Use_Progressive_Protection  = true;
+input bool   Use_Progressive_Protection  = false;
 input double PP_Stage1_R                 = 0.60;
 input double PP_Stage1_SL_R              = 0.45;
 input double PP_Stage2_R                 = 1.00;

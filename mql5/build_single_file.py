@@ -1,10 +1,11 @@
-"""Genera OHLCMTF_Scalper_v15_single.mq5: un solo archivo con todos los módulos incluidos en línea."""
+"""Genera el experto v16 de un solo archivo y lo copia a la entrega del cliente."""
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 MAIN = ROOT / "Experts/OHLCMTF/OHLCMTF_Scalper.mq5"
-OUT = ROOT / "OHLCMTF_Scalper_v15_single.mq5"
+OUT = ROOT / "OHLCMTF_Scalper_v16_single.mq5"
+CLIENT = ROOT.parent / "ENTREGA_CLIENTE" / "OHLCMTF_Scalper_v16.mq5"
 seen: set[str] = set()
 
 
@@ -28,9 +29,14 @@ def expand(path: Path) -> str:
 text = expand(MAIN)
 text = re.sub(r'^#endif\s*$', '', text, flags=re.M)
 header = ("//+------------------------------------------------------------------+\n"
-          "//| OHLCMTF_Scalper_v15_single.mq5 — ARCHIVO ÚNICO generado           |\n"
+          "//| OHLCMTF_Scalper_v16.mq5 — ARCHIVO ÚNICO generado                  |\n"
           "//| a partir de Experts/OHLCMTF + Include/OHLCMTF (no editar a mano;  |\n"
           "//| regenerar con build_single_file.py). Misma lógica que el modular. |\n"
+          "//| Identificación: OHLCMTF SCALPER v16                               |\n"
           "//+------------------------------------------------------------------+\n")
-OUT.write_text(header + text, encoding="utf-8")
+payload = header + text
+OUT.write_text(payload, encoding="utf-8")
+CLIENT.parent.mkdir(parents=True, exist_ok=True)
+CLIENT.write_text(payload, encoding="utf-8")
 print(f"{OUT.name}: {len(text.splitlines())} líneas, módulos: {sorted(seen)}")
+print(f"entrega: {CLIENT}")
